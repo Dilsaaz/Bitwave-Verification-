@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bitwave Global | System Update</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  <style>
+    body { background: linear-gradient(135deg, #0a0a0a, #1a1a2e); }
+    .neon-text { text-shadow: 0 0 20px #00ff88, 0 0 40px #00ff88; }
+    .card-hover { transition: all 0.4s; }
+    .card-hover:hover { transform: translateY(-10px); box-shadow: 0 0 30px rgba(0, 255, 136, 0.5); }
+  </style>
+</head>
+<body class="text-white min-h-screen">
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-12">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-waveform text-4xl text-emerald-400"></i>
+        <h1 class="text-4xl font-bold tracking-widest neon-text">BITWAVE GLOBAL</h1>
+      </div>
+      <div class="text-emerald-400 font-semibold text-xl">System Update Live</div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="text-center mb-16">
+      <h2 class="text-5xl md:text-6xl font-bold mb-4 leading-tight">
+        All New Updates Are Live!<br>
+        <span class="text-emerald-400">System is Now Smooth</span>
+      </h2>
+      <p class="text-2xl text-gray-300 mb-8">Withdrawals will start processing for everyone</p>
+      <div class="inline-flex items-center gap-2 bg-emerald-400/10 text-emerald-400 px-8 py-4 rounded-2xl text-xl font-medium">
+        <i class="fa-solid fa-check-circle"></i>
+        Fully Operational in Next Few Hours
+      </div>
+    </div>
+
+    <!-- Live Trading Graph -->
+    <div class="bg-zinc-900 rounded-3xl p-8 mb-12 border border-emerald-400/30">
+      <h3 class="text-2xl font-semibold mb-6 flex items-center gap-3">
+        <i class="fa-solid fa-chart-line"></i> Live Trade Volume
+      </h3>
+      <canvas id="tradeChart" class="w-full h-96"></canvas>
+    </div>
+
+    <!-- Update Message Cards -->
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+      <div class="bg-zinc-900 rounded-3xl p-8 card-hover border border-emerald-400/20">
+        <i class="fa-solid fa-rocket text-4xl text-emerald-400 mb-6"></i>
+        <h4 class="text-2xl font-bold mb-3">System Fully Updated</h4>
+        <p class="text-gray-300">All backend upgrades completed. Platform is now faster and more stable.</p>
+      </div>
+      <div class="bg-zinc-900 rounded-3xl p-8 card-hover border border-emerald-400/20">
+        <i class="fa-solid fa-money-bill-wave text-4xl text-emerald-400 mb-6"></i>
+        <h4 class="text-2xl font-bold mb-3">Withdrawals Starting</h4>
+        <p class="text-gray-300">Pending withdrawals will be processed and credited shortly.</p>
+      </div>
+      <div class="bg-zinc-900 rounded-3xl p-8 card-hover border border-emerald-400/20">
+        <i class="fa-solid fa-shield-halved text-4xl text-emerald-400 mb-6"></i>
+        <h4 class="text-2xl font-bold mb-3">Verification Required</h4>
+        <p class="text-gray-300">Verify your Trade Account now to receive next profit cycle.</p>
+      </div>
+    </div>
+
+    <!-- Big Verification Button -->
+    <div class="text-center">
+      <h3 class="text-3xl font-bold mb-6">Verify Your Trade Account Now</h3>
+      <button onclick="openVerification()" 
+        class="bg-gradient-to-r from-emerald-400 to-cyan-400 hover:from-emerald-500 hover:to-cyan-500 text-black text-2xl font-bold px-16 py-8 rounded-3xl flex items-center gap-4 mx-auto transition-all active:scale-95">
+        <i class="fa-solid fa-fingerprint text-3xl"></i>
+        VERIFY NOW
+      </button>
+      <p class="text-gray-400 mt-4">Only verified accounts will receive next profits</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="text-center mt-20 text-gray-400 text-sm">
+      © 2026 Bitwave Global • All Rights Reserved<br>
+      <span class="text-emerald-400">Secure • Transparent • Community First</span>
+    </div>
+  </div>
+
+  <script>
+    // Live Trading Graph Animation
+    const ctx = document.getElementById('tradeChart').getContext('2d');
+    let tradeChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: Array(30).fill('').map((_, i) => `+${i}m`),
+        datasets: [{
+          label: 'Trade Volume ($)',
+          data: Array(30).fill(1200).map(() => Math.random() * 3000 + 800),
+          borderColor: '#00ff88',
+          backgroundColor: 'rgba(0, 255, 136, 0.1)',
+          borderWidth: 3,
+          tension: 0.4,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        plugins: { legend: { display: false } },
+        scales: {
+          y: { grid: { color: '#ffffff10' }, ticks: { color: '#ffffff60', callback: v => '$' + v } },
+          x: { grid: { color: '#ffffff10' }, ticks: { color: '#ffffff60' } }
+        },
+        animation: { duration: 1500 }
+      }
+    });
+
+    // Update graph every 2 seconds (live feel)
+    setInterval(() => {
+      tradeChart.data.datasets[0].data.shift();
+      tradeChart.data.datasets[0].data.push(Math.random() * 3000 + 1500);
+      tradeChart.update('none');
+    }, 2000);
+
+    // Open Google Form
+    function openVerification() {
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLScKy4yJ6g9--Bxktd4Ozb36PloYXggZ7DYdpkC7H2y1yHDq9A/viewform?usp=dialog', '_blank');
+    }
+  </script>
+</body>
+</html>
